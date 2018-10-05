@@ -212,7 +212,7 @@ class DiversifiedSampler(Bucket):
 class Composite(Bucket):
     name = 'composite'
     _param_defs = {
-        'sources': {'type': 'agg', 'hash': True},
+        'sources': {'type': 'agg', 'list': True},
         'aggs': {'type': 'agg', 'hash': True},
     }
 

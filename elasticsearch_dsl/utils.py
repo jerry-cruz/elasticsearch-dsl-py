@@ -266,6 +266,10 @@ class DslBase(object):
                 elif pinfo.get('hash'):
                     value = dict((k, shortcut(v)) for (k, v) in iteritems(value))
 
+                #list(dict(name-> DslBase))
+                elif pinfo.get('list'):
+                    value = [dict([(k, shortcut(v))]) for (k, v) in iteritems(value)]
+
                 # single value object, just convert
                 else:
                     value = shortcut(value)
@@ -284,7 +288,7 @@ class DslBase(object):
             # container instead
             if name in self._param_defs:
                 pinfo = self._param_defs[name]
-                if pinfo.get('multi'):
+                if pinfo.get('multi') or pinfo.get('list'):
                     value = self._params.setdefault(name, [])
                 elif pinfo.get('hash'):
                     value = self._params.setdefault(name, {})
@@ -318,6 +322,10 @@ class DslBase(object):
                 # squash all the hash values into one dict
                 elif pinfo.get('hash'):
                     value = dict((k, v.to_dict()) for k, v in iteritems(value))
+
+                # squash the list of hash values into one list
+                elif pinfo.get('list'):
+                    value = [dict((k, v.to_dict()) for k, v in iteritems(val)) for val in value]
 
                 # serialize single values
                 else:
