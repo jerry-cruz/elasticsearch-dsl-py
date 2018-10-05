@@ -268,7 +268,7 @@ class DslBase(object):
 
                 #list(dict(name-> DslBase))
                 elif pinfo.get('list'):
-                    value = [dict([(k, shortcut(v))]) for (k, v) in iteritems(value)]
+                    value = [dict((k, shortcut(v)) for k, v in iteritems(val)) for val in value]
 
                 # single value object, just convert
                 else:
